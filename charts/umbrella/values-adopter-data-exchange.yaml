@@ -24,7 +24,7 @@ centralidp:
 bdrs-server-memory:
   enabled: true
 
-dataconsumerOne:
+dataconsumerThree:
   enabled: true
     # -- uncomment the following for persistence
     # postgresql:
@@ -32,7 +32,7 @@ dataconsumerOne:
     #     persistence:
     #       enabled: true
 
-tx-data-provider:
+tx-data-providerOne:
   seedTestdata: true
   enabled: true
   # -- uncomment the following for persistence

@@ -1419,3 +1419,191 @@ ssi-dim-wallet-stub:
       port: 8080
   keycloak:
     enabled: false
+
+dataconsumerthree:
+  enabled: false
+  seedTestdata: false
+  nameOverride: dataconsumer-3
+  secrets:
+    edc-wallet-secret: changeme
+  tractusx-connector:
+    nameOverride: dataconsumer-3-edc
+    participant:
+      id: BPNL00000003B5MJ
+    iatp:
+      id: did:web:ssi-dim-wallet-stub.tx.test:BPNL00000003B5MJ
+      trustedIssuers:
+        - did:web:ssi-dim-wallet-stub.tx.test:BPNL00000003CRHK
+      sts:
+        dim:
+          url: http://ssi-dim-wallet-stub.tx.test/api/sts
+        oauth:
+          token_url: http://ssi-dim-wallet-stub.tx.test/oauth/token
+          client:
+            id: BPNL00000003B5MJ
+            secret_alias: edc-wallet-secret
+    controlplane:
+      env:
+        TX_IAM_IATP_CREDENTIALSERVICE_URL: http://ssi-dim-wallet-stub.tx.test/api
+        EDC_IAM_DID_WEB_USE_HTTPS: false
+      bdrs:
+        server:
+          url: http://bdrs-server.tx.test/api/directory
+      endpoints:
+        management:
+          authKey: TEST1
+      ingresses:
+        - enabled: true
+          hostname: "dataconsumer-3-controlplane.tx.test"
+          endpoints:
+            - default
+            - protocol
+            - management
+          className: "nginx"
+          tls:
+            enabled: false
+    dataplane:
+      env:
+        TX_IAM_IATP_CREDENTIALSERVICE_URL: http://ssi-dim-wallet-stub.tx.test/api
+        EDC_IAM_DID_WEB_USE_HTTPS: false
+      ingresses:
+        - enabled: true
+          hostname: "dataconsumer-3-dataplane.tx.test"
+          endpoints:
+            - default
+            - public
+          className: "nginx"
+          tls:
+            enabled: false
+      token:
+        signer:
+          privatekey_alias: tokenSignerPrivateKey
+        verifier:
+          publickey_alias: tokenSignerPublicKey
+    postgresql:
+      nameOverride: dataconsumer-3-db
+      jdbcUrl: "jdbc:postgresql://{{ .Release.Name }}-dataconsumer-3-db:5432/edc"
+      auth:
+        password: "dbpassworddataconsumerthree"
+        postgresPassword: "dbpassworddataconsumerthree"
+    vault:
+      hashicorp:
+        url: http://edc-dataconsumer-3-vault:8200
+      secretNames:
+        transferProxyTokenSignerPrivateKey: tokenSignerPrivateKey
+        transferProxyTokenSignerPublicKey: tokenSignerPublicKey
+        transferProxyTokenEncryptionAesKey: tokenEncryptionAesKey
+
+  vault:
+    nameOverride: edc-dataconsumer-3-vault
+    fullnameOverride: edc-dataconsumer-3-vault
+    enabled: true
+    server:
+      postStart: []
+
+  digital-twin-registry:
+    enabled: false
+
+  simple-data-backend:
+    enabled: false
+
+tx-data-providerOne:
+  enabled: false
+  seedTestdata: true
+  backendUrl: http://{{ .Release.Name }}-dataproviderOne-submodelserver:8080
+  registryUrl: http://{{ .Release.Name }}-dataproviderOne-dtr:8080/api/v3
+  controlplanePublicUrl: http://{{ .Release.Name }}-dataproviderOne-edc-controlplane:8084
+  controlplaneManagementUrl: http://{{ .Release.Name }}-dataprovider-edcOne-controlplane:8081
+  dataplaneUrl: http://{{ .Release.Name }}-dataproviderOne-edc-dataplane:8081
+  nameOverride: dataproviderOne
+  secrets:
+    edc-wallet-secret: changeme
+  tractusx-connector:
+    nameOverride: dataproviderOne-edc
+    participant:
+      id: BPNS00000008BDFH
+    iatp:
+      id: did:web:ssi-dim-wallet-stub.tx.test:BPNS00000008BDFH
+      trustedIssuers:
+        - did:web:ssi-dim-wallet-stub.tx.test:BPNL00000003CRHK
+      sts:
+        dim:
+          url: http://ssi-dim-wallet-stub.tx.test/api/sts
+        oauth:
+          token_url: http://ssi-dim-wallet-stub.tx.test/oauth/token
+          client:
+            id: BPNS00000008BDFH
+            secret_alias: edc-wallet-secret
+    controlplane:
+      env:
+        TX_IAM_IATP_CREDENTIALSERVICE_URL: http://ssi-dim-wallet-stub.tx.test/api
+        EDC_IAM_DID_WEB_USE_HTTPS: false
+      bdrs:
+        server:
+          url: http://bdrs-server.tx.test/api/directory
+      endpoints:
+        management:
+          authKey: TEST2
+      ingresses:
+        - enabled: true
+          hostname: "dataproviderOne-controlplane.tx.test"
+          endpoints:
+            - default
+            - protocol
+            - management
+          className: "nginx"
+          tls:
+            enabled: false
+    dataplane:
+      env:
+        TX_IAM_IATP_CREDENTIALSERVICE_URL: http://ssi-dim-wallet-stub.tx.test/api
+        EDC_IAM_DID_WEB_USE_HTTPS: false
+      ingresses:
+        - enabled: true
+          hostname: "dataproviderOne-dataplane.tx.test"
+          endpoints:
+            - default
+            - public
+          className: "nginx"
+          tls:
+            enabled: false
+      token:
+        signer:
+          privatekey_alias: tokenSignerPrivateKey
+        verifier:
+          publickey_alias: tokenSignerPublicKey
+    postgresql:
+      nameOverride: dataproviderOne-db
+      jdbcUrl: "jdbc:postgresql://{{ .Release.Name }}-dataproviderOne-db:5432/edc"
+      auth:
+        password: "dbpasswordtxdataproviderOne"
+        postgresPassword: "dbpasswordtxdataproviderOne"
+    vault:
+      hashicorp:
+        url: http://edc-dataproviderOne-vault:8200
+      secretNames:
+        transferProxyTokenSignerPrivateKey: tokenSignerPrivateKey
+        transferProxyTokenSignerPublicKey: tokenSignerPublicKey
+        transferProxyTokenEncryptionAesKey: tokenEncryptionAesKey
+
+  vault:
+    nameOverride: edc-dataproviderOne-vault
+    fullnameOverride: edc-dataproviderOne-vault
+    enabled: true
+    server:
+      postStart: []
+
+  digital-twin-registry:
+    nameOverride: dataproviderOne-dtr
+    postgresql:
+      nameOverride: dataproviderOne-dtr-db
+      auth:
+        password: "dbpassworddtrdataproviderOne"
+        existingSecret: dataproviderOne-secret-dtr-postgres-init
+    registry:
+      host: dataproviderOne-dtr.test
+
+  simple-data-backend:
+    nameOverride: dataproviderOne-submodelserver
+    ingress:
+      enabled: false
