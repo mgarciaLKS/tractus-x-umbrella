@@ -1420,7 +1420,7 @@ ssi-dim-wallet-stub:
   keycloak:
     enabled: false
 
-dataconsumerthree:
+dataconsumerThree:
   enabled: false
   seedTestdata: false
   nameOverride: dataconsumer-3
@@ -1510,16 +1510,16 @@ dataconsumerthree:
 tx-data-providerOne:
   enabled: false
   seedTestdata: true
-  backendUrl: http://{{ .Release.Name }}-dataproviderOne-submodelserver:8080
-  registryUrl: http://{{ .Release.Name }}-dataproviderOne-dtr:8080/api/v3
-  controlplanePublicUrl: http://{{ .Release.Name }}-dataproviderOne-edc-controlplane:8084
-  controlplaneManagementUrl: http://{{ .Release.Name }}-dataprovider-edcOne-controlplane:8081
-  dataplaneUrl: http://{{ .Release.Name }}-dataproviderOne-edc-dataplane:8081
-  nameOverride: dataproviderOne
+  backendUrl: http://{{ .Release.Name }}-dataproviderone-submodelserver:8080
+  registryUrl: http://{{ .Release.Name }}-dataproviderone-dtr:8080/api/v3
+  controlplanePublicUrl: http://{{ .Release.Name }}-dataproviderone-edc-controlplane:8084
+  controlplaneManagementUrl: http://{{ .Release.Name }}-dataproviderone-edc-controlplane:8081
+  dataplaneUrl: http://{{ .Release.Name }}-dataproviderone-edc-dataplane:8081
+  nameOverride: dataproviderone
   secrets:
     edc-wallet-secret: changeme
   tractusx-connector:
-    nameOverride: dataproviderOne-edc
+    nameOverride: dataproviderone-edc
     participant:
       id: BPNS00000008BDFH
     iatp:
@@ -1546,7 +1546,7 @@ tx-data-providerOne:
           authKey: TEST2
       ingresses:
         - enabled: true
-          hostname: "dataproviderOne-controlplane.tx.test"
+          hostname: "dataproviderone-controlplane.tx.test"
           endpoints:
             - default
             - protocol
@@ -1560,7 +1560,7 @@ tx-data-providerOne:
         EDC_IAM_DID_WEB_USE_HTTPS: false
       ingresses:
         - enabled: true
-          hostname: "dataproviderOne-dataplane.tx.test"
+          hostname: "dataproviderone-dataplane.tx.test"
           endpoints:
             - default
             - public
@@ -1573,37 +1573,37 @@ tx-data-providerOne:
         verifier:
           publickey_alias: tokenSignerPublicKey
     postgresql:
-      nameOverride: dataproviderOne-db
-      jdbcUrl: "jdbc:postgresql://{{ .Release.Name }}-dataproviderOne-db:5432/edc"
+      nameOverride: dataproviderone-db
+      jdbcUrl: "jdbc:postgresql://{{ .Release.Name }}-dataproviderone-db:5432/edc"
       auth:
-        password: "dbpasswordtxdataproviderOne"
-        postgresPassword: "dbpasswordtxdataproviderOne"
+        password: "dbpasswordtxdataproviderone"
+        postgresPassword: "dbpasswordtxdataproviderone"
     vault:
       hashicorp:
-        url: http://edc-dataproviderOne-vault:8200
+        url: http://edc-dataproviderone-vault:8200
       secretNames:
         transferProxyTokenSignerPrivateKey: tokenSignerPrivateKey
         transferProxyTokenSignerPublicKey: tokenSignerPublicKey
         transferProxyTokenEncryptionAesKey: tokenEncryptionAesKey
 
   vault:
-    nameOverride: edc-dataproviderOne-vault
-    fullnameOverride: edc-dataproviderOne-vault
+    nameOverride: edc-dataproviderone-vault
+    fullnameOverride: edc-dataproviderone-vault
     enabled: true
     server:
       postStart: []
 
   digital-twin-registry:
-    nameOverride: dataproviderOne-dtr
+    nameOverride: dataproviderone-dtr
     postgresql:
-      nameOverride: dataproviderOne-dtr-db
+      nameOverride: dataproviderone-dtr-db
       auth:
-        password: "dbpassworddtrdataproviderOne"
-        existingSecret: dataproviderOne-secret-dtr-postgres-init
+        password: "dbpassworddtrdataproviderone"
+        existingSecret: dataproviderone-secret-dtr-postgres-init
     registry:
-      host: dataproviderOne-dtr.test
+      host: dataproviderone-dtr.test
 
   simple-data-backend:
-    nameOverride: dataproviderOne-submodelserver
+    nameOverride: dataproviderone-submodelserver
     ingress:
       enabled: false

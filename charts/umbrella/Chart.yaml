@@ -96,11 +96,13 @@ dependencies:
     condition: dataconsumerTwo.enabled
     # TX Data Providers
   - name: tx-data-provider
+    alias: tx-data-providerOne
     version: 0.1.1
     repository: file://../tx-data-provider
     condition: tx-data-providerOne.enabled
     # TX Data Providers
   - name: tx-data-provider
+    alias: dataconsumerThree
     version: 0.1.1
     repository: file://../tx-data-provider
     condition: dataconsumerThree.enabled
