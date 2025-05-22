@@ -4,6 +4,12 @@ This guide provides instructions to set up a Kubernetes cluster required for run
 
 You can also follow the guide with the help of the [tutorial video](https://github.com/eclipse-tractusx/eclipse-tractusx.github.io.largefiles/blob/main/umbrella/video-tutorials/setup.mp4).
 
+
+
+https://github.com/user-attachments/assets/90b5a49f-dd93-4184-b1a0-0c882081b9fa
+
+
+
 ## System Requirements
 
 | CPU (Cores) | Memory (GB) |
